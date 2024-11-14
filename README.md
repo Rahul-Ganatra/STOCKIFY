@@ -22,3 +22,30 @@ Stockify is a web-based application that uses machine learning to predict future
   - pandas
   - numpy
   - scikit-learn
+
+## Quick Start
+
+1. Clone and set up the project:
+   git clone https://github.com/Rahul-Ganatra/STOCKIFY.git
+   cd stockify
+
+2. Create a Virtual Environment
+   python -m venv venv
+
+3. Activate the Virtual Environment
+   For Windows:
+         venv\Scripts\activate
+   For MacOS/Linux:
+         source venv/bin/activate
+
+4. Download Required Packages
+   pip install Flask yfinance pandas numpy matplotlib tensorflow
+
+## Running the Application
+
+1. Start the Flask Server
+   python app.py
+
+2. Open the Web App
+   http://127.0.0.1:5000/
+   

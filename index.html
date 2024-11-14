@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STOCKIFY</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: #1a1a1a;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #ecf0f1;
+        }
+
+        .form-section {
+            background: #2c3e50;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #ecf0f1;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #34495e;
+            color: #ecf0f1;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .submit-btn {
+            background: #2ecc71;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #27ae60;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        .graph-section {
+            background: #2c3e50;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            height: 90vh;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            overflow-y: auto;
+        }
+
+        .graph-box {
+            background: #34495e;
+            padding: 20px;
+            border-radius: 8px;
+            flex: 1;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .graph-box h2 {
+            color: #ecf0f1;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .graph-container {
+            flex: 1;
+            width: 100%;
+            min-height: 400px;
+            background: #2c3e50;
+            border-radius: 8px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .graph-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .control-btn {
+            background: #3498db;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .predictions-section {
+            background: #2c3e50;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .predictions-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #34495e;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .predictions-table th,
+        .predictions-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #2c3e50;
+        }
+
+        .predictions-table th {
+            background: #2980b9;
+            color: #ecf0f1;
+            font-weight: 500;
+        }
+
+        .predictions-table tr:hover {
+            background: #2c3e50;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .control-btn {
+                width: 100%;
+            }
+        }
+
+        #graph-container {
+            flex: 1;
+            width: 100%;
+            min-height: 800px;
+            background: #34495e;
+            border-radius: 8px;
+            padding: 20px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #graph-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            #graph-container {
+                margin-bottom: 15px;
+            }
+
+            .graph-section {
+                padding: 15px;
+            }
+        }
+
+        .main-content {
+            display: flex;
+            gap: 40px;
+            height: calc(100vh - 150px);
+            margin-top: 30px;
+        }
+
+        .left-panel {
+            flex: 0 0 25%;
+            margin-right: 30px;
+        }
+
+        .right-panel {
+            flex: 1;
+            min-width: 0;
+            width: 75%;
+        }
+
+        .input-section {
+            background: #2c3e50;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #ecf0f1;
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #34495e;
+            background: #34495e;
+            color: #ecf0f1;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+
+        .input-group input::placeholder {
+            color: #95a5a6;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #2ecc71;
+            color: white;
+            padding: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-content {
+                flex-direction: column;
+            }
+
+            .left-panel {
+                flex: none;
+                width: 100%;
+            }
+        }
+
+        .controls {
+            margin-top: 20px;
+            padding: 10px;
+            background: #34495e;
+            border-radius: 8px;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .market-indices {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .index-card {
+            flex: 1;
+            background: #2c3e50;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .index-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .index-card h3 {
+            color: #3498db;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .index-value {
+            font-size: 1.8em;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: #ecf0f1;
+        }
+
+        .index-change {
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .positive-change {
+            color: #2ecc71;
+        }
+
+        .negative-change {
+            color: #e74c3c;
+        }
+
+        @media (max-width: 768px) {
+            .market-indices {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>STOCKIFY</h1>
+            <p>Predict future stock prices using machine learning</p>
+        </div>
+
+        <div class="market-indices">
+            <div class="index-card">
+                <h3>SENSEX</h3>
+                <div class="index-value" id="sensex-value">Loading...</div>
+                <div class="index-change" id="sensex-change">--</div>
+            </div>
+            <div class="index-card">
+                <h3>NIFTY 50</h3>
+                <div class="index-value" id="nifty50-value">Loading...</div>
+                <div class="index-change" id="nifty50-change">--</div>
+            </div>
+            <div class="index-card">
+                <h3>NIFTY BANK</h3>
+                <div class="index-value" id="niftybank-value">Loading...</div>
+                <div class="index-change" id="niftybank-change">--</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="left-panel">
+                <div class="input-section">
+                    <form id="prediction-form">
+                        <div class="input-group">
+                            <label for="stock-symbol">Stock Symbol</label>
+                            <input type="text" id="stock-symbol" required placeholder="e.g., RELIANCE.NS, TCS.NS"
+                                autocomplete="off">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="years">Analysis Period (Years)</label>
+                            <input type="number" id="years" min="1" max="10" required placeholder="Enter 1-10 years">
+                        </div>
+
+                        <button type="submit" class="submit-btn">Generate Prediction</button>
+                    </form>
+                </div>
+
+                <div class="predictions-section">
+                    <h2>Predicted Prices</h2>
+                    <table class="predictions-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Predicted Price (₹)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="predictions-body">
+                            <!-- Predictions will be inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="right-panel">
+                <div class="graph-section">
+                    <div class="graph-box">
+                        <h2>Last 30 Days Prediction</h2>
+                        <div id="thirty-day-graph" class="graph-container">
+                            <!-- 30-day graph will be inserted here -->
+                        </div>
+                    </div>
+
+                    <div class="graph-box">
+                        <h2>Full Historical Data</h2>
+                        <div id="historical-graph" class="graph-container">
+                            <!-- Historical graph will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('prediction-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const symbol = document.getElementById('stock-symbol').value;
+            const years = document.getElementById('years').value;
+
+            // Show loading state
+            document.querySelector('.submit-btn').disabled = true;
+            document.querySelector('.submit-btn').textContent = 'Generating...';
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        symbol: symbol,
+                        years: years
+                    })
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    alert(data.error);
+                    return;
+                }
+
+                // Update graphs
+                document.getElementById('thirty-day-graph').innerHTML =
+                    `<img src="data:image/png;base64,${data.thirtyDayPlot}" alt="30 Day Prediction" style="width:100%;">`;
+                document.getElementById('historical-graph').innerHTML =
+                    `<img src="data:image/png;base64,${data.historicalPlot}" alt="Historical Data" style="width:100%;">`;
+
+                // Update predictions table
+                const tbody = document.getElementById('predictions-body');
+                tbody.innerHTML = '';
+                data.predictions.forEach(pred => {
+                    tbody.innerHTML += `
+                        <tr>
+                            <td>${pred.date}</td>
+                            <td>₹${pred.price.toFixed(2)}</td>
+                        </tr>
+                    `;
+                });
+
+            } catch (error) {
+                alert('Error generating prediction: ' + error);
+            } finally {
+                // Reset button state
+                document.querySelector('.submit-btn').disabled = false;
+                document.querySelector('.submit-btn').textContent = 'Generate Prediction';
+            }
+        });
+
+        async function updateMarketIndices() {
+            try {
+                const response = await fetch('/market_indices');
+                const data = await response.json();
+
+                if (data.success) {
+                    // Update each index
+                    ['sensex', 'nifty50', 'niftybank'].forEach(index => {
+                        const valueElement = document.getElementById(`${index}-value`);
+                        const changeElement = document.getElementById(`${index}-change`);
+
+                        if (data[index]) {
+                            valueElement.textContent = data[index].value.toLocaleString();
+                            const change = data[index].change;
+                            changeElement.textContent = `${change >= 0 ? '+' : ''}${change}%`;
+                            changeElement.className = change >= 0 ? 'positive-change' : 'negative-change';
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error fetching market indices:', error);
+            }
+        }
+
+        // Update indices on page load and every minute
+        updateMarketIndices();
+        setInterval(updateMarketIndices, 60000);
+    </script>
+</body>
+
+</html>

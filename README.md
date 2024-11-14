@@ -26,6 +26,7 @@ Stockify is a web-based application that uses machine learning to predict future
 ## Quick Start
 
 **1. Clone and set up the project:**
+
 git clone https://github.com/Rahul-Ganatra/STOCKIFY.git
 cd stockify
 

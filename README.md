@@ -14,11 +14,7 @@ Stockify is a web application that predicts future stock prices using machine le
 - **Visualization**: Matplotlib  
 
 ## Installation  
-
-### Prerequisites  
-- Python 3.x  
-- pip (Python package installer)  
-
+ 
 ### Steps to Run  
 
 1. **Clone the Repository**  

@@ -42,5 +42,5 @@ Stockify is a web application that predicts future stock prices using machine le
    ```bash
    python app.py
 
-6.  **Open in Browser**
-    Visit http://127.0.0.1:5000/ to access the application.
+6.  **Open in Browser:**
+     Visit http://127.0.0.1:5000/ to access the application.
